@@ -1,10 +1,19 @@
-from DataAnalysis import DataAnalysis
-from Prediction import Prediction
-from SalesAnalysis import SalesAnalysis
+from DataAnalysis import data_analysis
+from DistributionOfSalesCommand import DistributionOfSalesCommand
+from MonthlySalesCommand import MonthlySalesCommand
+from PriceAnalysisCommand import PriceAnalysisCommand
+from ProductPreferenceCommand import ProductPreferenceCommand
+from WeeklySalesCommand import WeeklySalesCommand
 
-data_analysis_instance = DataAnalysis()
-prediction_instance = Prediction()
-sales_analysis = SalesAnalysis()
+# ===================Command Pattern===================
+commands = {
+    1: MonthlySalesCommand(data_analysis.components[0]),
+    2: PriceAnalysisCommand(data_analysis.components[1]),
+    3: WeeklySalesCommand(data_analysis.components[2]),
+    4: DistributionOfSalesCommand(data_analysis.components[3]),
+    5: ProductPreferenceCommand(data_analysis.components[4]),
+}
+# =================End of Command Pattern================
 
 while True:
     # =============================User Interface=============================
@@ -23,36 +32,13 @@ while True:
         # =============================User Input==================================
         user_input = int(input("Enter your choice: "))
         # ===========================End of User Input=============================
-
-        # ===========================Exit from the application=====================
-        if user_input == 8:
+        if user_input in commands:
+            commands[user_input].execute()
+        elif user_input == 8:
             print("==============Thank you for using our system==============")
             break
-        # =============================End of Exit==================================
         else:
-            # ==========Navigate to data analysis based on user input===============
-            if user_input == 1:
-                sales_analysis.monthly_sales()
-
-            elif user_input == 2:
-                data_analysis_instance.price_analysis()
-
-            elif user_input == 3:
-                data_analysis_instance.weekly_sales()
-
-            elif user_input == 4:
-                data_analysis_instance.distribution_of_sales()
-
-            elif user_input == 5:
-                data_analysis_instance.product_preference()
-
-            elif user_input == 6:
-                data_analysis_instance.payment_distribution()
-
-            elif user_input == 7:
-                prediction_instance.sales_prediction()
-
-            # ========== End of Navigate to data analysis based on user input==========
+            print("Invalid choice, please try again.")
 
     # =============================Invalid Input===============================
     except ValueError:
