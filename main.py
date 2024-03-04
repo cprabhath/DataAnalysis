@@ -1,8 +1,10 @@
 from DataAnalysis import DataAnalysis
 from Prediction import Prediction
+from SalesAnalysis import SalesAnalysis
 
 data_analysis_instance = DataAnalysis()
 prediction_instance = Prediction()
+sales_analysis = SalesAnalysis()
 
 while True:
     # =============================User Interface=============================
@@ -17,21 +19,20 @@ while True:
     print("7. Sales Prediction for next 3 months")
     print("8. Exit from the application")
     # ===========================End of User Interface=========================
+    try:
+        # =============================User Input==================================
+        user_input = int(input("Enter your choice: "))
+        # ===========================End of User Input=============================
 
-    # =============================User Input==================================
-    user_input = int(input("Enter your choice: "))
-    # ===========================End of User Input=============================
-
-    # ===========================Exit from the application=====================
-    if user_input == 8:
-        print("==============Thank you for using our system==============")
-        break
-    # =============================End of Exit==================================
-    else:
-        # ==========Navigate to data analysis based on user input===============
-        try:
+        # ===========================Exit from the application=====================
+        if user_input == 8:
+            print("==============Thank you for using our system==============")
+            break
+        # =============================End of Exit==================================
+        else:
+            # ==========Navigate to data analysis based on user input===============
             if user_input == 1:
-                data_analysis_instance.monthly_sales()
+                sales_analysis.monthly_sales()
 
             elif user_input == 2:
                 data_analysis_instance.price_analysis()
@@ -51,9 +52,12 @@ while True:
             elif user_input == 7:
                 prediction_instance.sales_prediction()
 
-        # ========== End of Navigate to data analysis based on user input==========
+            # ========== End of Navigate to data analysis based on user input==========
 
-        # =============================Invalid Input===============================
-        except ValueError:
-            print("Invalid Input. Please try Again!")
-        # ===========================End of Invalid Input==========================
+    # =============================Invalid Input===============================
+    except ValueError:
+        print("Invalid Input. Please try Again!")
+        break
+    # ===========================End of Invalid Input==========================
+
+

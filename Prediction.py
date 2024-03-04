@@ -3,6 +3,8 @@ import matplotlib.pyplot as plt
 from sklearn.linear_model import LinearRegression
 import numpy as np
 
+from DataReader import DataReader
+
 
 class Prediction:
     # Singleton class
@@ -18,7 +20,7 @@ class Prediction:
         if not hasattr(self, 'initialized'):
             self.initialized = True
         # read the csv file
-        self.df = pd.read_csv('supermarket_sales.csv')
+        self.df = DataReader().get_dataframe()
 
         # convert date column to date, month and week
         self.df['Date'] = pd.to_datetime(self.df['Date'])

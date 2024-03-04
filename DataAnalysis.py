@@ -4,6 +4,8 @@ import matplotlib.pyplot as plt
 # used for analysis representation
 import seaborn as sns
 
+from DataReader import DataReader
+
 
 class DataAnalysis:
     # Singleton class
@@ -20,7 +22,7 @@ class DataAnalysis:
             self.initialized = True
 
         # read the csv file
-        self.df = pd.read_csv('supermarket_sales.csv')
+        self.df = DataReader().get_dataframe()
 
         # convert date column to datetime
         self.df['Date'] = pd.to_datetime(self.df['Date'])
@@ -29,16 +31,6 @@ class DataAnalysis:
         self.df['Month'] = self.df['Date'].dt.month
         self.df['Year'] = self.df['Date'].dt.year
         self.df['Week'] = self.df['Date'].dt.isocalendar().week
-
-    # monthly sales analysis for each branch
-    def monthly_sales(self):
-        print("Please wait, Analyzing your dataset... this may take few minutes")
-        monthly_sales = self.df.groupby(['Month', 'Branch'])['Total'].sum().unstack()
-        monthly_sales.plot(kind="bar", stacked=True, figsize=(10, 6))
-        plt.title("Monthly Sales Analysis of Each Branch")
-        plt.xlabel("Month")
-        plt.ylabel("Total Sales")
-        plt.show()
 
     # monthly sales analysis for each branch per year
     def monthly_sales_per_year(self):
